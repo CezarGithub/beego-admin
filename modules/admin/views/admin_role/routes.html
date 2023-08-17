@@ -1,0 +1,79 @@
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="box-title">{{i18n  "app.role"}} : {{.role.Name}}</h3>
+            <div class="box">  
+               <div class="box-header ">
+					{{button "admin_roles.routes"  $.buttons  nil}}  
+                </div>			
+                <div class="box-body">
+                    <form class="form-inline searchForm" id="searchForm" action={{urlfor "AdminRoleController.Routes" "id" .role.Id}} method="GET"><!--"/admin/admin_role/route" -->
+                        <div class="form-group">
+                            <input value="{{._keywords}}"
+                                   name="_keywords" id="_keywords" class="form-control input-sm" placeholder="{{i18n  "app.name"}}">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-search"></i> {{i18n  "app.search"}}
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <button onclick="clearSearchForm()" class="btn btn-sm btn-default" type="button"><i
+                                    class="fa  fa-eraser"></i> {{i18n  "app.reset"}}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+			<!--Top of the data list-->
+                <div class="box-body table-wrap">
+                    <table class="table table-hover table-bordered datatable" width="100%">
+                        <thead>
+                        <tr>
+                            <th>
+                                <input id="dataCheckAll" type="checkbox" onclick="checkAll(this)" class="checkbox" placeholder="{{i18n  "app.toggle"}}">
+                            </th>
+                            <th>ID</th>
+                            <th>{{i18n  "app.module"}}</th>
+                            <th>{{i18n  "app.controller"}}</th>
+                            <th>{{i18n  "app.mapping_method"}}</th>
+                            <th>{{i18n  "app.logging_method"}}</th>
+                            <th>{{i18n  "app.name"}}</th>
+                            <th>{{i18n  "admin.user.role_enabled"}}</th>
+ 
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{ $admin := .admin }}
+                        {{range $key,$item := .data}}
+                        <tr>
+                            <td>
+                                <input type="checkbox" onclick="checkThis(this)" name="data-checkbox"
+                                       data-id="{{$item.Id}}" class="checkbox data-list-check" value="{{$item.Id}}">
+                            </td>
+                            <td>{{$item.Id}}</td>
+                            <td>{{$item.Module}}</td>
+                            <td>{{$item.Controller}}</td>
+                            <td>{{$item.MappingMethod}}</td>
+                            <td>{{$item.LogMethod}}</td>
+                            <td>{{$item.Name}}</td>
+
+                            <td>{{if eq $item.Status 1}} <span class="label label-success">{{i18n "app.yes"}}</span> {{else}} <span class="label label-warning">{{i18n "app.no"}}</span> {{end}}</td>
+ 
+                        </tr>
+                        {{end}}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Bottom of data list -->
+                 {{template "admin/views/public/pagination.html" .}}
+            </div>
+        </div>
+    </div>
+</section>
+

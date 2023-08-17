@@ -1,0 +1,45 @@
+   <!--{{ printf "%#v" .}}-->
+<!-- Do not change .Button.DataData see : intarnal\toolbar\funcmap.go: RenderButton -->
+{{if .Button.Enabled}}
+        <a title="{{.Button.Title}}" 
+            data-toggle="{{.Button.DataToggle}}" 
+            class="{{.Button.Class}}" 
+            name="{{.Button.Name}}" 
+            {{if .Button.DataUrl}}                       
+                data-title="{{.Button.Title}}" 
+                data-confirm-title="{{.Button.DataConfirmTitle}}" 
+                data-confirm-content='{{.Button.DataConfirmContent}}' 
+                data-url="{{.Button.DataUrl}}" 
+                {{.Button.DataData}}              
+                {{if .Button.DataId}}
+                    data-id="{{.Button.DataId}}"  
+                {{end}}
+                {{if .Button.DataForm}}   
+                    data-form="{{.Button.DataForm}}"                 
+                {{end}}
+                {{if .Button.DataMethod}}   
+                    data-method="{{.Button.DataMethod}}"                 
+                {{end}}
+                {{if .Button.DataConfirm}}                        
+                    data-confirm="{{.Button.DataConfirm}}" 
+                {{end}}
+                {{if .Button.DataType}}
+                    data-type="{{.Button.DataType}}" 
+                {{end}}
+            {{end}}
+            {{if .Button.OnClick}}
+                onclick="{{.Button.OnClick}}" 
+            {{end}}
+            {{if .Button.Href}}
+                    {{if .Button.Params}}
+                            href="{{.Button.Href}}?{{.Button.Params}}" 
+                        {{else}}
+                            href="{{.Button.Href}}" 
+                    {{end}}
+            {{end}}
+            >
+            <i class="{{.Button.Icon}}"></i>              
+        </a>
+{{end}}
+
+ 

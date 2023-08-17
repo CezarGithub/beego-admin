@@ -1,0 +1,121 @@
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <!-- Form header -->
+               <div class="box-header with-border">
+					{{button "admin_user.submit"  $.buttons  .data}} 
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        
+                    </div>
+                </div>
+                <form id="admin_userForm" class="form-horizontal dataForm" action="" 
+                        method="post"
+                        enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="{{.data.Id}}">
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label">{{i18n  "admin.user.username"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <input id="user_id" name="user_id"  value="{{.data.User.Id}}" style="display:none"/>
+                                <div class="input-group iconpicker-container">
+                                    <a  data-model="{{.searchBoxUser}}"  
+                                        data-callback="searchUser" data-url="{{urlfor "UserController.Search"}}" 
+                                        class="input-group-addon btn btn-default btn-xs  SearchBox" data-title="{{i18n  "app.search"}}" title="{{i18n  "app.search"}}" data-toggle="tooltip">                                    
+                                    </a>       
+                                    <input  id="username"  name="username"   value="{{.data.User.Username}}" 
+                                        class="form-control  input-sm" placeholder="{{i18n  "admin.user.username"}}" disabled/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="role" class="col-sm-2 control-label">{{i18n  "app.role"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <select name="role[]" id="role" class="form-control field-multi-select"
+                                        multiple="multiple">
+                                    {{range $key,$item := .roles}}
+                                        <option value="{{$item.Id}}" {{range $key1,$item1 := $.role_arr}}{{if compare $item1 $item.Id}}selected{{end}}{{end}}>
+                                            {{$item.Name}}
+                                        </option>
+                                    {{end}}
+                                </select>
+
+                            </div>
+                        </div>
+                        <script>
+                            $('#role').select2();
+                        </script>
+
+                        <div class="form-group">
+                            <label for="loginname" class="col-sm-2 control-label">{{i18n  "admin.user.loginname"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <input maxlength="50" class="form-control" id="loginname" name="loginname" placeholder="{{i18n  "admin.user.login_name"}}" name="loginname" value="{{.data.LoginName}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="col-sm-2 control-label">{{i18n  "login.password"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <input maxlength="255" id="password" autocomplete="off" type="password" name="password"
+                                       value="{{.data.Password}}" class="form-control" placeholder="{{i18n  "login.password"}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="status" class="col-sm-2 control-label">{{i18n  "app.enabled"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <input class="input-switch" id="status" value="1" {{if eq .data.Status 1}}checked {{end}} type="checkbox"/>
+                                <input class="switch field-switch" name="status" value="{{.data.Status}}" hidden/>
+                            </div>
+                        </div>
+
+                        <script>
+                            $('#status').bootstrapSwitch({
+                                onText: "{{i18n  "app.yes"}}",
+                                offText: "{{i18n  "app.no"}}",
+                                onColor: "success",
+                                offColor: "danger",
+                                onSwitchChange: function (event, state) {
+                                    $(event.target).closest('.bootstrap-switch').next().val(state ? '1' : '0').change();
+                                }
+                            });
+                        </script>
+
+                        <div class="form-group">
+                            <label for="language" class="col-sm-2 control-label">{{i18n  "admin.user.lang"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <select name="language" id="language" class="form-control field-multi-select">
+                                    {{range $key,$item := .languages}}
+                                        <option value="{{$item.Code}}" {{ if eq $item.Code $.data.Language }}selected="selected"{{ end }}>
+                                            {{$item.Description}}
+                                        </option>
+                                    {{end}}
+                                </select>
+
+                            </div>
+                        </div>
+                        <script>
+                            $('#language').select2();
+                        </script>
+
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script>
+   function searchUser(data){
+        //alert(data.name);
+        $("#user_id").val(data.id);
+        $("#username").val(data.username);
+    }
+ </script>

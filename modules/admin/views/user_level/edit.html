@@ -1,0 +1,79 @@
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+               <div class="box-header with-border">
+                    <h3 class="box-title">{{.data.Name}}</h3>
+                    {{button "user_level.submit"  $.buttons  .data}}
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        
+                    </div>
+                </div>
+                <!-- Form -->
+                <form id="user_levelForm" class="form-horizontal dataForm" action="" method="post"
+                      enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="{{.data.Id}}">
+                    <!-- Form field area -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">{{i18n  "app.name"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <input id="name" name="name" value="{{.data.Name}}" placeholder="{{i18n  "app.name"}}"
+                                       type="text" class="form-control field-text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-sm-2 control-label">{{i18n  "app.description"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <input id="description" name="description" value="{{.data.Description}}"
+                                       placeholder="{{i18n  "app.description"}}" type="text" class="form-control field-text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="img" class="col-sm-2 control-label">{{i18n  "app.picture"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <input id="img" name="img" placeholder="{{i18n  "app.picture"}}" data-initial-preview="{{.data.Img}}" type="file"
+                                class="form-control field-image" >
+                            </div>
+                        </div>
+                        <script>
+                            $('#img').fileinput({
+                                language: '{{.admin.jsLang}}',
+                                overwriteInitial: true,
+                                browseLabel: '{{i18n  "app.browse"}}',
+                                initialPreviewAsData: true,
+                                dropZoneEnabled: false,
+                                showUpload: false,
+                                showRemove: false,
+                                allowedFileTypes: ['image'],
+                                maxFileSize: 10240,
+                            });
+                        </script>
+                        <div class="form-group">
+                            <label for="status" class="col-sm-2 control-label">{{i18n  "app.enabled"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <input class="input-switch" id="status" value="1" {{if eq .data.Status 1}}checked {{end}} type="checkbox"/>
+                                <input class="switch field-switch" placeholder="{{i18n  "app.enabled"}}" name="status"
+                                       value="{{.data.Status}}" hidden/>
+                            </div>
+                        </div>
+
+                        <script>
+                            $('#status').bootstrapSwitch({
+                                onText: "{{i18n  "app.yes"}}",
+                                offText: "{{i18n  "app.no"}}",
+                                onColor: "success",
+                                offColor: "danger",
+                                onSwitchChange: function (event, state) {
+                                    $(event.target).closest('.bootstrap-switch').next().val(state ? '1' : '0').change();
+                                }
+                            });
+                        </script>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

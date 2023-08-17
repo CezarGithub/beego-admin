@@ -1,0 +1,36 @@
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+			     <div class="box-header ">                  
+                    {{button "admin_menu.add"  $.buttons  nil}} 
+                    {{button "admin_menu.toggle"  $.buttons  nil}} 
+                </div>
+                <div class="box-body table-responsive">
+                    <table class="table table-hover table-bordered datatable" width="100%">
+                        <thead>
+                        <tr>
+                            <th>
+                                <input id="dataCheckAll" type="checkbox" onclick="checkAll(this)" class="checkbox"
+                                       placeholder="{{i18n  "app.toggle"}}">
+                            </th>
+                            <th>ID</th>
+                            <th>{{i18n  "app.name"}}</th>
+                            <th>url</th>
+                            <th>ID {{i18n  "app.parent"}}</th>
+                            <th>{{i18n  "app.icon"}}</th>
+                            <th>{{i18n  "app.sort"}}</th>
+                            <th>{{i18n  "app.visible"}}</th>
+                            <th>{{i18n  "app.logging_method"}}</th>
+                            <th>{{i18n  "app.action"}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{str2html .data}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

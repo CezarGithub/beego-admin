@@ -1,0 +1,95 @@
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">  
+			    <div class="box-header ">
+                     {{button "county.add"  $.buttons  nil}} 
+                </div>
+                 <form class="form-horizontal dataForm" id="searchForm" action="{{urlfor "CountyController.Index"}}" method="GET">
+
+                       <div class="box-body">
+                            <input id="country_id" name="country_id" style="display:none"/>
+                            <div class="input-group iconpicker-container" >
+                                <a 
+                                     data-model="{{.searchBoxCountry}}"   
+                                    data-callback="searchCountry" data-url="{{urlfor "CountryController.Search"}}" 
+                                    class="input-group-addon btn btn-default btn-xs  SearchBox" data-title="{{i18n  "app.search"}}" title="{{i18n  "app.search"}}" data-toggle="tooltip">                                    
+                                </a>                                             
+                                <input id="_country_name" name="_country_name" value="{{._country_name}}"
+                                    class="form-control input-sm" placeholder="{{i18n  "master.country.name"}}" readonly/>
+                            </div>
+                        </div>
+                       <!-- <div class="box-body">
+                            <input value="{{._keywords}}"  name="_keywords" id="_keywords" 
+                                class="form-control input-sm" placeholder="{{i18n  "app.name"}}">
+                        </div> -->
+                       <div class="box-body">
+                            <input value="{{._name}}"  name="_name" id="_name" 
+                                class="form-control input-sm" placeholder="{{i18n  "app.name"}}">
+                        </div>
+                        <div class="box-footer">
+                            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-search"></i> {{i18n  "app.search"}}
+                            </button>
+                            <button onclick="clearSearchForm()" class="btn btn-sm btn-default" type="button"><i
+                                    class="fa  fa-eraser"></i> {{i18n  "app.reset"}}
+                            </button>
+                        </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <!--Top of the data list-->
+ 
+                <div class="box-body table-wrap">
+                    <table class="table table-hover table-bordered datatable" width="100%">
+                        <thead>
+                        <tr>
+                            <th>
+                                <input id="dataCheckAll" type="checkbox" onclick="checkAll(this)" class="checkbox" placeholder="{{i18n  "app.toggle"}}">
+                            </th>
+                            <th style="display:none;">ID</th>
+                            <th>{{i18n  "master.county.name"}}</th>
+                            <th>{{i18n  "master.county.code"}}</th>
+                            <th>{{i18n  "master.country.name"}}</th>
+                            <th>{{i18n  "db.actions"}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{ $admin := .admin }}
+                        {{range $key,$item := .data}}
+                        <tr>
+                            <td>
+                                <input type="checkbox" onclick="checkThis(this)" name="data-checkbox"
+                                       data-id="{{$item.Id}}" class="checkbox data-list-check" value="{{$item.Id}}">
+                            </td>
+                            <td style="display:none;">{{$item.Id}}</td>
+                            <td>{{$item.Name}}</td>
+                            <td>{{$item.Code}}</td>
+                            <td>{{$item.Country.Name}}</td>
+                            <td class="td-do">
+                                   {{button "county.edit"  $.buttons  $item}} 
+                            </td>
+                        </tr>
+                        {{end}}
+                        </tbody>
+                    </table>
+                </div>             
+                {{template "admin/views/public/pagination.html" .}}
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+   function searchCountry(data){
+        //alert(data.name);
+        $("#country_id").val(data.id);
+        $("#_country_name").val(data.name);
+        $("#searchForm").submit();
+    }
+
+ </script>

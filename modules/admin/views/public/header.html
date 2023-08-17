@@ -1,0 +1,60 @@
+<!--Page header-->
+{{if ne true .admin.pjax}}
+<header class="main-header">
+    <a class="logo">
+        <span class="logo-mini">{{if eq .admin.short_name ""}}Backend{{else}}{{.admin.short_name}}{{end}}</span>
+        <span class="logo-lg">{{if eq .admin.name ""}}Backend{{else}}{{.admin.name}}{{end}}</span>
+    </a>
+    <nav class="navbar navbar-static-top">
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+        <a href="#" class="BackButton" style=" float: left;padding: 15px 10px;color: #fff;" 
+            title="{{i18n  "app.back"}}" 
+            onMouseOver="this.style.color='#FFA500'"
+            onMouseOut="this.style.color='#FFF'">
+            <i class="fa fa-arrow-left"></i>
+        </a>
+        <a href="#" class="ReloadButton" style=" float: left;padding: 15px 10px;color: #fff;" 
+            title="{{i18n  "app.refresh"}}" 
+            onMouseOver="this.style.color='#FFA500'"
+            onMouseOut="this.style.color='#FFF'">
+            <i class="fa fa-refresh"></i>
+        </a>
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="{{if eq .admin.user.User.Avatar ""}}/static/admin/images/avatar.png{{else}}{{.admin.user.User.Avatar}}{{end}}" onerror="javascript:this.src='/static/admin/images/avatar.png';this.onerror = null" class="user-image" alt="avatar">
+                        <span class="hidden-xs">{{.admin.user.User.Nickname}}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="user-header">
+                            <img src="{{if eq .admin.user.User.Avatar ""}}/static/admin/images/avatar.png{{else}}{{.admin.user.User.Avatar}}{{end}}" onerror="javascript:this.src='/static/admin/images/avatar.png';this.onerror = null" class="img-circle" alt="avatar">
+                            <p>
+                                {{.admin.user.User.Nickname}}
+                                <small>{{.admin.user.User.Username}}</small>
+                            </p>
+                        </li>
+                        <li class="user-footer">
+                            <div class="pull-left">
+                                <a href="/admin/admin_user/profile" class="btn btn-default btn-flat">{{i18n  "app.info"}}</a>
+                            </div>
+                            <div class="pull-right">
+                                <a href="/admin/auth/logout" class="btn btn-default btn-flat">{{i18n  "login.logout"}}</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+</header>
+{{end}}

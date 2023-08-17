@@ -1,0 +1,18 @@
+              <!-- Bottom of data list -->
+                {{if ne "" .paginate.BootStrapRenderLink}}
+                    <div class="box-footer">
+                        {{ str2html .paginate.BootStrapRenderLink}}
+                        <label class="control-label pull-right" style="margin-right: 10px; font-weight: 100;">
+                            <small>{{i18n  "db.total"}}{{.paginate.Total}}{{i18n  "db.records"}}</small>&nbsp;
+                            <small>{{i18n  "db.rec_per_page"}}</small>
+                            &nbsp;
+                            <select class="input-sm" onchange="changePerPage(this)">
+                                {{range $index, $val := $.admin.per_page_config}}
+                                    <option value="{{$val}}" {{if eq $val $.admin.per_page}} selected {{end}}>{{$val}}</option>
+                                {{end}}
+                            </select>
+                            &nbsp;
+                            <small>{{i18n  "db.records"}}</small>
+                        </label>
+                    </div>
+                {{end}}

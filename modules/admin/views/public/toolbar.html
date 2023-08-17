@@ -1,0 +1,114 @@
+<!--DEPRECATED -->
+<!--Toolbar start -->  
+
+<div id="{{.ToXolbar.Name}}" class="box-title"> 
+    <div class="box-tools">    
+        <div class="{{.Toolbar.Class}}"> <!--btn-group-lg-->
+            <!--moved in top bar -->
+            <!--<button type="button" class="btn btn-box-tool BackButton" title="Back"><i class="fa fa-arrow-left"></i></button>
+            <button type="button" class="btn btn-box-tool ReloadButton" ><i class="fa fa-refresh"></i></button>-->
+            {{range  .Toolbar.Buttons}}
+                <a title="{{.Title}}" 
+                    data-toggle="{{.DataToggle}}" 
+                    class="{{.Class}}" 
+                    {{if .DataUrl}}                       
+                        data-title="{{.Title}}"
+                        data-confirm-title="{{.DataConfirmTitle}}"
+                        data-confirm-content='{{.DataConfirmContent}}'
+                        {{if $.RowId}}
+                            data-id="{{$.RowId}}"
+                        {{end}}
+                        {{if .DataId}}
+                            data-id="{{.DataId}}"  
+                        {{else}}
+                            {{.DataData}} 
+                        {{end}}
+                        data-url="{{.DataUrl}}"
+                        {{if .DataForm}}   
+                            data-form="{{.DataForm}}"                 
+                        {{end}}
+                        {{if .DataMethod}}   
+                            data-method="{{.DataMethod}}"                 
+                        {{end}}
+                        {{if .DataConfirm}}                        
+                            data-confirm="{{.DataConfirm}}"
+                        {{end}}
+                        {{if .DataType}}
+                            data-type="{{.DataType}}"
+                        {{end}}
+                    {{end}}
+                    {{if .OnClick}}
+                        onclick="{{.OnClick}}"
+                    {{end}}
+                    {{if .Href}}
+                        {{if $.RowId}}
+                            href="{{.Href}}?id={{$.RowId}}&{{.Params}}"
+                        {{else}}
+                            {{if .Params}}
+                                    href="{{.Href}}?{{.Params}}"
+                                {{else}}
+                                    href="{{.Href}}"
+                            {{end}}
+                        {{end}}
+                    {{end}}
+                    >
+                    <i class="{{.Icon}}"></i>              
+                </a>
+            {{end}}
+            {{if len .Toolbar.DropDown}}
+            <div class="btn-group dropright">
+                <button class="btn btn-default dropdown-toggle "  type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="fa fa-bars">&nbsp</span>  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    {{range  .Toolbar.DropDown}}
+                        <li><a
+                            {{if .DataUrl}}                             
+                                data-confirm-title="{{.DataConfirmTitle}}"
+                                data-confirm-content='{{.DataConfirmContent}}'
+                                {{if .DataId}}
+                                    data-id="{{.DataId}}"  
+                                {{else}}
+                                    {{.DataData}} 
+                                {{end}}
+                                data-url="{{.DataUrl}}"
+                                {{if .DataForm}}   
+                                    data-form="{{.DataForm}}"                 
+                                {{end}}
+                                {{if .DataConfirm}}                        
+                                    data-confirm="{{.DataConfirm}}"
+                                {{end}}
+                                {{if .DataType}}
+                                    data-type="{{.DataType}}"
+                                {{end}}
+                            {{end}}
+                            {{if .OnClick}}
+                                onclick="{{.OnClick}}"
+                            {{end}}
+                            {{if .Href}}
+                                {{if $.RowId}}
+                                    data-id="{{$.RowId}}"
+                                    href="{{.Href}}?id={{$.RowId}}&{{.Params}}"
+                                {{else}}
+                                    {{if .Params}}
+                                            href="{{.Href}}?{{.Params}}"
+                                        {{else}}
+                                            href="{{.Href}}"
+                                    {{end}}
+                                {{end}}
+                            {{end}}
+                            class="{{.Class}}">
+                            {{.Title}}
+                            </a>
+                        </li>   
+                    {{end}}
+                </ul> 
+            </div>
+            {{end}}
+        </div>
+    </div>
+</div>
+
+<!-- Toolbar end -->
+
+<!-- data-data example : '{"id":"{{$.RowId}}","tag":"msxhgw"}' -->

@@ -1,0 +1,69 @@
+                    <section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title"></h3>
+                     {{button "currency.submit"  $.buttons  .data}} 
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        
+                    </div>
+                </div>
+                
+                <div class="box-body">
+                    
+                    <form id="currencyForm" class="form-horizontal dataForm" action="" method="post"
+                        enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="{{.data.Id}}">
+								<div class="form-group">
+									<label for="name" class="col-sm-2 control-label">{{i18n  "master.currency.name"}}</label>
+									<div class="col-sm-10 col-md-4">
+										<input maxlength="50" id="name" name="name" value="{{.data.Name}}"
+											class="form-control" placeholder='{{i18n  "master.currency.name"}}'>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="name" class="col-sm-2 control-label">{{i18n  "master.currency.currency_code"}}</label>
+									<div class="col-sm-10 col-md-4">
+										<input maxlength="50" id="currency_code" name="currency_code" value="{{.data.CurrencyCode}}"
+											class="form-control" placeholder='{{i18n  "master.currency.currency_code"}}'>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="base_currency" class="col-sm-2 control-label">{{i18n "master.currency.base_currency"}}</label>
+									<div class="col-sm-10 col-md-4">
+										<input class="input-switch" id="base_currency" value="1" {{if eq .data.BaseCurrency 1}}checked {{end}}type="checkbox"/>
+										<input class="switch field-switch" placeholder='{{i18n  "master.currency.base_currency"}}' name="base_currency"
+											value="{{.data.BaseCurrency }}" hidden/>
+									</div>
+								</div>
+
+								<script>
+									$('#base_currency').bootstrapSwitch({
+										onText: "{{i18n  "app.yes"}}",
+										offText: "{{i18n  "app.no"}}",
+										onColor: "success",
+										offColor: "danger",
+										onSwitchChange: function (event, state) {
+											$(event.target).closest('.bootstrap-switch').next().val(state ? '1' : '0').change();
+										}
+									});
+								</script>      
+                    </form>
+                
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+   function searchCurrency(data){
+        
+        $("#currency_id").val(data.id);
+        $("#currency_name").val(data.name);
+    }
+</script>

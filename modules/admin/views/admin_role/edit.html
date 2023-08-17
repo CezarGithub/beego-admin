@@ -1,0 +1,71 @@
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+               <div class="box-header with-border">
+                    <h3 class="box-title">{{.data.Name}}</h3>
+                    {{button "admin_role.submit"  $.buttons  .data}} 
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        
+                    </div>
+                </div>
+                <!-- Form header -->
+                <div class="box-header with-border">
+                    <div class="btn-group">
+                        <a class="btn flat btn-sm btn-default BackButton">
+                            <i class="fa fa-arrow-left"></i>
+                            {{i18n  "app.back"}}
+                        </a>
+                    </div>
+                </div>
+
+                <form id="admin_roleForm" class="form-horizontal dataForm" action="" method="post"
+                      enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="{{.data.Id}}">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">{{i18n  "app.name"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <input maxlength="50" id="name" name="name" value="{{.data.Name}}"
+                                       class="form-control" placeholder="{{i18n  "app.name"}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description" class="col-sm-2 control-label">{{i18n  "app.description"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <input maxlength="50" id="description" name="description"
+                                       value="{{.data.Description}}" class="form-control" placeholder="{{i18n  "app.description"}}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="status" class="col-sm-2 control-label">{{i18n  "app.enabled"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <input class="input-switch" id="status" value="1" {{if eq .data.Status 1}}checked {{end}}type="checkbox"/>
+                                <input class="switch field-switch" placeholder="{{i18n  "app.enabled"}}" name="status"
+                                       value="{{.data.Status }}" hidden/>
+                            </div>
+                        </div>
+
+                        <script>
+                            $('#status').bootstrapSwitch({
+                                onText: "{{i18n  "app.yes"}}",
+                                offText: "{{i18n  "app.no"}}",
+                                onColor: "success",
+                                offColor: "danger",
+                                onSwitchChange: function (event, state) {
+                                    $(event.target).closest('.bootstrap-switch').next().val(state ? '1' : '0').change();
+                                }
+                            });
+                        </script>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

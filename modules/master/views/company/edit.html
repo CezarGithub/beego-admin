@@ -1,0 +1,159 @@
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{.data.Name}}</h3>
+                    {{button "company.submit"  $.buttons  .data}}
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        
+                    </div>
+                </div>
+                <!-- box body -->
+                <div class="box-body">
+                    <!-- Form header -->
+                    <form id="companyForm" class="form-horizontal dataForm" action="" method="post"
+                        enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="{{.data.Id}}">
+    
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">{{i18n "master.company.name"}}</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <input maxlength="50" id="name" name="name" value="{{.data.Name}}"
+                                        class="form-control" placeholder="{{i18n "app.name"}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="vat" class="col-sm-2 control-label">{{i18n "master.company.vat"}}</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <input maxlength="50" id="vat" name="vat"
+                                        value="{{.data.VAT}}" class="form-control" placeholder="{{i18n "master.company.vat"}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="regno" class="col-sm-2 control-label">{{i18n "master.company.regno"}}</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <input maxlength="50" id="regno" name="regno"
+                                        value="{{.data.RegNo}}" class="form-control" placeholder="{{i18n "master.company.regno"}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mark" class="col-sm-2 control-label">{{i18n "master.company.mark"}}</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <input maxlength="50" id="mark" name="mark"
+                                        value="{{.data.Mark}}" class="form-control" placeholder="{{i18n "master.company.mark"}}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="code" class="col-sm-2 control-label">{{i18n "master.company.code"}}</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <input maxlength="50" id="code" name="code"
+                                        value="{{.data.Code}}" class="form-control" placeholder="{{i18n "master.company.code"}}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="web" class="col-sm-2 control-label">{{i18n "master.company.web"}}</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <input maxlength="50" id="web" name="web"
+                                        value="{{.data.Web}}" class="form-control" placeholder="{{i18n "master.company.web"}}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-sm-2 control-label">{{i18n "master.company.email"}}</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <input maxlength="50" id="email" name="email"
+                                        value="{{.data.Email}}" class="form-control" placeholder="{{i18n "master.company.email"}}">
+                                </div>
+                            </div>
+                        <div class="form-group">
+                                <label for="country_id" class="col-sm-2 control-label">{{i18n "master.company.country"}}</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <input id="country_id" name="country_id"  value="{{.data.Country.Id}}" style="display:none"/>
+                                    <div class="input-group iconpicker-container">
+                                        <a  data-model="{{.searchBoxCountry}}" 
+                                            data-callback="searchCountry" data-url="{{urlfor "CountryController.Search"}}" 
+                                            class="input-group-addon btn btn-default btn-xs  SearchBox" data-title="{{i18n "app.details"}}" title="{{i18n "app.details"}}" data-toggle="tooltip">                                    
+                                        </a>      
+                                
+                                        <input maxlength="50" id="country_name" name="country_name" readonly="true"
+                                            value="{{.data.Country.Name}}" class="form-control" placeholder="{{i18n "app.description"}}">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="status" class="col-sm-2 control-label">{{i18n "app.enabled"}}</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <input class="input-switch" id="status" value="1" {{if eq .data.Status 1}}checked {{end}}type="checkbox"/>
+                                    <input class="switch field-switch" placeholder="{{i18n "app.enabled"}}" name="status"
+                                        value="{{.data.Status }}" hidden/>
+                                </div>
+                            </div>
+
+                            <script>
+                                $('#status').bootstrapSwitch({
+                                    onText: "{{i18n "app.yes"}}",
+                                    offText: "{{i18n "app.no"}}",
+                                    onColor: "success",
+                                    offColor: "danger",
+                                    onSwitchChange: function (event, state) {
+                                        $(event.target).closest('.bootstrap-switch').next().val(state ? '1' : '0').change();
+                                    }
+                                });
+                            </script>
+
+                            <div class="form-group">
+                                <label for="group_id" class="col-sm-2 control-label">{{i18n "master.company.groupname"}}</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <select name="group_id" id="group_id" class="form-control field-select"
+                                            data-placeholder="{{i18n "master.company.groupname"}}">
+                                        <option value=""></option>
+                                        {{range $key,$item := .group_list}}
+                                        <option value="{{$item.Id}}" {{if compare $.data.Group.Id $item.Id}}selected {{end}}>
+                                            {{$item.Name}}
+                                        </option>
+                                        {{end}}
+                                    </select>
+                                </div>
+                            </div>
+                            <script>
+                                $('#group_id').select2({
+                                    language: "{{.admin.jsLang}}"
+                                });
+                            </script>
+
+                            <div class="form-group">
+                                <label for="description" class="col-sm-2 control-label">{{i18n "master.company.description"}}</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <input maxlength="250" id="description" name="description"
+                                        value="{{.data.Description}}" class="form-control" placeholder="{{i18n "master.company.description"}}">
+                                </div>
+                            </div>                 
+                    </form>
+                <!--box body-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {{if gt .data.Id 0}}
+        {{template "master/views/company/details.html" .}}
+    {{end}}
+</section>
+
+<script>
+   function searchCountry(data){
+        //alert(data.name);
+        $("#country_id").val(data.id);
+        $("#country_name").val(data.name);
+    }
+ </script>
+
+ 
+

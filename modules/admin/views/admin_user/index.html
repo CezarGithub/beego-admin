@@ -1,0 +1,80 @@
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+               <div class="box-header ">
+                    {{button "admin_user.add"  $.buttons  nil}} 
+					{{button "admin_user.toggle"  $.buttons  nil}} 
+                </div>
+                <div class="box-body">
+                    <form class="form-inline searchForm" id="searchForm" action={{urlfor "AdminUserController.Index"}} method="GET"><!--"/admin/admin_user/index" -->
+
+                        <div class="form-group">
+                            <input value="{{._keywords}}"
+                                   name="_keywords" id="_keywords" class="form-control input-sm" placeholder="{{i18n  "login.username"}}">
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-search"></i> {{i18n  "app.search"}}
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <button onclick="clearSearchForm()" class="btn btn-sm btn-default" type="button"><i
+                                    class="fa  fa-eraser"></i> {{i18n  "app.reset"}}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body table-responsive">
+                    <table class="table table-hover table-bordered datatable" width="100%">
+                        <thead>
+                        <tr>
+                            <th>
+                                <input id="dataCheckAll" type="checkbox" onclick="checkAll(this)" class="checkbox" placeholder="{{i18n  "app.toggle"}}">
+                            </th>
+                            <th>ID</th>
+                            <th>{{i18n  "admin.user.loginname"}}</th>
+                            <th>{{i18n  "admin.user.username"}}</th>
+                            <th>{{i18n  "app.role"}}</th>
+                            <th>{{i18n  "app.enabled"}}</th>
+                            <th>{{i18n  "db.actions"}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{ $admin := .admin }}
+                        {{range $key, $item := .data}}
+                        <tr>
+                            <td>
+                                <input type="checkbox" onclick="checkThis(this)" name="data-checkbox"
+                                       data-id="{{$item.Id}}" class="checkbox data-list-check" value="{{$item.Id}}">
+                            </td>
+                            <td>{{$item.Id}}</td>
+                            <td>{{$item.LoginName}}</td>
+                            <td>{{$item.User.Username}}</td>
+                            <td>
+                                {{range $role_id,$admin_role := $item.GetRoleText}}
+                                <small class="label bg-blue">{{$admin_role.Name}}</small>
+                                {{end}}
+                            </td>
+                            <td>{{if eq 1 $item.Status}} <span class="label label-success">{{i18n  "app.yes"}}</span> {{else}} <span class="label label-warning">{{i18n  "app.no"}}</span> {{end}}</td>
+                            <td class="td-do">
+                                 {{button "admin_user.edit"  $.buttons  $item}}   
+                            </td>
+                        </tr>
+                        {{end}}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Bottom of data list -->
+                {{template "admin/views/public/pagination.html" .}}
+            </div>
+        </div>
+    </div>
+</section>

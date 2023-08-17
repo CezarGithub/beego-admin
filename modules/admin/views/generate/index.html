@@ -1,0 +1,123 @@
+<!--Blank page reference template-->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                
+                    <form class="form-inline searchForm" id="generateForm" action='{{urlfor "CodeGenerationController.Index"}}' method="GET">
+                        <div class="form-group">
+                            <label for="_method" class="control-label">{{i18n  "app.module"}} -> </label>
+                            <select name="_module" id="_method" class="form-control " style="width: 250px !important;" onchange='submitForm();'>
+                                <option value=""> {{i18n  "app.module"}}</option>
+                                {{range $key,$item := .modules }}
+                                <option value="{{$item}}" {{if compare $._module $item}} selected {{end}}>
+                                    {{$item}}
+                                </option>
+                                {{end}}
+                            </select>  
+                       
+                        </div>
+                        <script>
+                            $('#_module').select2({
+                                width:'100%',
+                            });
+                             function submitForm(){
+                                var selectButton = document.getElementById( 'btnSearch' );
+                                selectButton.click();                            
+                            }
+                        </script>    
+                        <div class="form-group">
+                            <button class="btn btn-sm btn-primary" type="submit" id="btnSearch"><i class="fa fa-search"></i>{{i18n  "app.search"}}
+                            </button><div class="btn btn-sm btn-primary" title="Hello &#013;World" ><i class="fa fa-question-circle"></i></div>
+                        </div> 
+
+                        <hr width="100%" size="8" align="center">
+                       <div class="input-group">
+                          <input type="text"id="_name" name="_name" placeholder="{{i18n  "admin.class_name"}}" class="form-control" >
+                            <span class="input-group-btn">
+                             {{button "generate.new"  $.buttons  nil}}                          
+                            </span>
+                        </div> 
+                    </form>
+
+                </div>
+           </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body table-responsive">
+                    <table class="table table-hover table-bordered datatable" width="100%">
+                        <thead>
+                        <tr>
+                            <th>{{i18n  "db.model_name"}}</th>
+                            <th>{{i18n  "db.actions"}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{ $admin := .admin }}
+                        {{range $item := .data}}
+                        <tr>
+                            <td>{{$item}}</td>
+                            <td class="td-do">
+                                <a data-data='{"_name":"{{$item}}","_doc":"form.tpl"}' data-url="doc" data-confirm="2"
+                                    data-type="2" class="AjaxButton btn btn-default btn-xs"
+                                    data-title="{{$item}}{{i18n  "admin.code.form"}}" title="{{i18n  "admin.code.form"}}"
+                                    data-toggle="tooltip">
+                                    <i class="fa  fa-wpforms"></i>
+                                </a>
+                                 <a data-data='{"_name":"{{$item}}","_doc":"controller.tpl"}' data-url="doc" data-confirm="2"
+                                    data-type="2" class="AjaxButton btn btn-default btn-xs"
+                                    data-title="{{$item}}{{i18n  "admin.code.controller"}}" title="{{i18n  "admin.code.controller"}}"
+                                    data-toggle="tooltip">
+                                    <i class="fa  fa-microchip"></i>
+                                </a>
+                                 <a data-data='{"_name":"{{$item}}","_doc":"service.tpl"}' data-url="doc" data-confirm="2"
+                                    data-type="2" class="AjaxButton btn btn-default btn-xs"
+                                    data-title="{{$item}}{{i18n  "admin.code.service"}}" title="{{i18n  "admin.code.service"}}"
+                                    data-toggle="tooltip">
+                                    <i class="fa fa-cogs"></i>
+                                </a>
+                                 <a data-data='{"_name":"{{$item}}","_doc":"model.tpl"}' data-url="doc" data-confirm="2"
+                                    data-type="2" class="AjaxButton btn btn-default btn-xs"
+                                    data-title="{{$item}}{{i18n  "admin.code.model"}}" title="{{i18n  "admin.code.model"}}"
+                                    data-toggle="tooltip">
+                                    <i class="fa  fa-file-code-o"></i>
+                                </a>
+                                 <a data-data='{"_name":"{{$item}}","_doc":"index.x"}' data-url="doc" data-confirm="2"
+                                    data-type="2" class="AjaxButton btn btn-default btn-xs"
+                                    data-title="{{$item}}{{i18n  "admin.code.index"}}" title="{{i18n  "admin.code.index"}}"
+                                    data-toggle="tooltip">
+                                    <i class="fa  fa-tasks"></i>
+                                </a>
+                               <a data-data='{"_name":"{{$item}}","_doc":"edit.x"}' data-url="doc" data-confirm="2"
+                                    data-type="2" class="AjaxButton btn btn-default btn-xs"
+                                    data-title="{{$item}}{{i18n  "admin.code.edit"}}" title="{{i18n  "admin.code.edit"}}"
+                                    data-toggle="tooltip">
+                                    <i class="fa fa-pencil-square-o"></i>
+                                </a>
+                                <a data-data='{"_name":"{{$item}}","_doc":"transaction.tpl"}' data-url="doc" data-confirm="2"
+                                    data-type="2" class="AjaxButton btn btn-default btn-xs"
+                                    data-title="{{$item}}{{i18n  "admin.code.transaction"}}" title="{{i18n  "admin.code.transaction"}}"
+                                    data-toggle="tooltip">
+                                    <i class="fa fa-object-group"></i>
+                                </a>
+                                 <a data-data='{"_name":"{{$item}}","_doc":"i18n.tpl"}' data-url="doc" data-confirm="2"
+                                    data-type="2" class="AjaxButton btn btn-default btn-xs"
+                                    data-title="{{$item}}{{i18n  "admin.code.i18n"}}" title="{{i18n  "admin.code.i18n"}}"
+                                    data-toggle="tooltip">
+                                    <i class="fa fa-globe"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {{end}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

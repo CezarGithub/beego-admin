@@ -1,0 +1,23 @@
+<section class="content-header">
+ {{if .flash.success }}
+                <script>
+                    //{{.flash.success}}
+                      layer.msg('<i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>', {scrollbar: false, icon: 6,time:400});
+                </script>
+{{ end }}
+ {{if .flash.error }}
+                <script>
+                     layer.alert('{{.flash.error}}', {title: '',scrollbar: false, icon: 5});
+                </script>
+{{ end }}
+ {{if .flash.notice }}
+                <script>
+                      layer.msg('{{.flash.notice}}', {scrollbar: false, icon: 1,time:1000});
+                </script>
+{{ end }}
+ {{if .flash.warning }}
+                <script>
+                      layer.alert('{{.flash.warning}}', {title: '!',scrollbar: false, icon: 0});
+                </script>
+{{ end }}
+</section>

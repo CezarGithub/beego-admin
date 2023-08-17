@@ -1,0 +1,122 @@
+<!--Data list page-->
+<section class="content">
+
+    <!--Top search filter-->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header ">
+                    {{button "user.add"  $.buttons  nil}}
+                    {{button "user.toggle"  $.buttons  nil}}
+                    {{button "user.delete"  $.buttons  nil}}
+                    {{button "user.export"  $.buttons  nil}}
+                </div>
+                <div class="box-body">
+                    <form class="form-inline searchForm" id="searchForm" action={{urlfor "UserController.Index"}} method="GET"><!--"/admin/user/index"-->
+
+                        <div class="form-group">
+                            <input value="{{._keywords}}"
+                                   name="_keywords" id="_keywords" class="form-control input-sm"
+                                   placeholder="{{i18n  "app.user"}}/{{i18n  "app.phone"}}">
+                        </div>
+
+                        <div class="form-group">
+                            <select name="_order" id="_order" class="form-control input-sm index-order">
+                                <option value="">{{i18n  "app.sort"}}</option>
+                                <option value="id" {{if compare ._order "id"}}selected {{end}}>ID</option>
+                                <option value="user_level_id" {{if compare ._order "user_level_id"}}selected {{end}}>{{i18n  "app.user_level"}}
+                                </option>
+                                <option value="mobile" {{if compare ._order "mobile"}}selected {{end}}>{{i18n  "app.phone"}}
+                                </option>
+                                <option value="status" {{if compare ._order "status"}}selected {{end}}>{{i18n  "app.enable"}}
+                                </option>
+                                <option value="create_time" {{if compare ._order "create_time"}}selected {{end}}>
+                                    {{i18n  "app.creation_time"}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <select name="_by" id="_by" class="form-control input-sm index-order">
+                                <option value="">{{i18n  "app.sort"}}</option>
+                                <option value="desc" {{if compare ._by "desc"}}selected {{end}}>{{i18n  "app.desc"}}</option>
+                                <option value="asc" {{if compare ._by "asc"}}selected {{end}}>{{i18n  "app.asc"}}</option>
+                            </select>
+                        </div>
+                        <script>
+                            $('#_order').select2();
+                            $('#_by').select2();
+                        </script>
+
+                        <div class="form-group">
+                            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-search"></i> {{i18n  "app.search"}}
+                            </button>
+                        </div>
+                         <div class="form-group">
+                            <button onclick="clearSearchForm()" class="btn btn-sm btn-default" type="button"><i
+                                    class="fa  fa-eraser"></i> {{i18n  "app.reset"}}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body table-responsive">
+                    <table class="table table-hover table-bordered datatable" width="100%">
+                        <thead>
+                        <tr>
+                            <th>
+                                <input id="dataCheckAll" type="checkbox" onclick="checkAll(this)" class="checkbox"
+                                       placeholder="{{i18n  "app.toggle"}}">
+                            </th>
+                            <th>ID</th>
+                            <th>{{i18n  "app.avatar"}}</th>
+                            <th>{{i18n  "app.user_level"}}</th>
+                            <th>{{i18n  "login.username"}}</th>
+                            <th>{{i18n  "app.phone"}}</th>
+                            <th>{{i18n  "app.nickname"}}</th>
+                            <th>{{i18n  "app.enabled"}}</th>
+                            <th>{{i18n  "app.date_time"}}</th>
+
+                            <th>{{i18n  "app.action"}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{ $admin := .admin }}
+                        {{range $key,$item := .data}}
+                        <tr>
+                            <td>
+                                <input type="checkbox" onclick="checkThis(this)" name="data-checkbox"
+                                       data-id="{{$item.Id}}" class="checkbox data-list-check" value="{{$item.Id}}"
+                                       placeholder="{{i18n "app.toggle"}}">
+                            </td>
+                            <td>{{$item.Id}}</td>
+                            <td><img style="max-width: 40px" src="{{$item.Avatar}}"></td>
+                            <td>{{ map_get $.user_level_map $item.UserLevel.Id }}</td>
+                            <td>{{$item.Username}}</td>
+                            <td>{{$item.Mobile}}</td>
+                            <td>{{$item.Nickname}}</td>
+                            <td>{{if eq $item.Status 1}}<span class="label label-success">{{i18n "app.yes"}}</span> {{else}} <span class="label label-warning">{{i18n "app.no"}}</span> {{end}}</td>
+                            <td>{{$item.CreateTime | TimeFormat}}</td>
+
+                            <td class="td-do">
+								{{button "user.edit"  $.buttons  $item}}
+                            </td>
+                        </tr>
+                        {{end}}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Bottom of data list -->
+                {{template "admin/views/public/pagination.html" .}}
+
+            </div>
+        </div>
+    </div>
+</section>

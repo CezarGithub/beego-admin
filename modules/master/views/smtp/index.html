@@ -1,0 +1,52 @@
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">  
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <!--Top of the data list-->
+				 {{button "smtp.add"  $.buttons  nil}} 
+                <div class="box-body table-wrap">
+                    <table class="table table-hover table-bordered datatable" width="100%">
+                        <thead>
+                        <tr>
+                            <th>
+                                <input id="dataCheckAll" type="checkbox" onclick="checkAll(this)" class="checkbox" placeholder="{{i18n  "app.toggle"}}">
+                            </th>
+                            <th style="display:none;">ID</th>
+                            <th>{{i18n  "master.smtp.server"}}</th>
+                            <th>{{i18n  "master.smtp.port"}}</th>
+                            <th>{{i18n  "master.company.name"}}</th>
+                            <th>{{i18n  "db.actions"}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{ $admin := .admin }}
+                        {{range $key,$item := .data}}
+                        <tr>
+                            <td>
+                                <input type="checkbox" onclick="checkThis(this)" name="data-checkbox"
+                                       data-id="{{$item.Id}}" class="checkbox data-list-check" value="{{$item.Id}}">
+                            </td>
+                            <td style="display:none;">{{$item.Id}}</td>
+                            <td>{{$item.Server}}</td>
+                            <td>{{$item.Port}}</td>
+                            <td>{{$item.Company.Name}}</td>
+                            <td class="td-do">
+                                    {{button "smtp.edit"  $.buttons  $item}}   
+                            </td>
+                        </tr>
+                        {{end}}
+                        </tbody>
+                    </table>
+                </div>             
+                {{template "admin/views/public/pagination.html" .}}
+            </div>
+        </div>
+    </div>
+</section>

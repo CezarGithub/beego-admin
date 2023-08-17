@@ -1,0 +1,20 @@
+    <div class="row">
+        <div class="col-md-12">
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{i18n  "admin.cron.title"}} {{button "cron_job.add_details"  $.buttons  nil}}</h3>
+            </div>
+            <div class="box-body no-padding">
+              <ul class="nav nav-pills nav-stacked">
+                {{range $key,$item := .data.Intervals}}
+                    <li><i class="fa fa-clock-o pull-left"></i> 
+                    <h4><span class="btn btn-primary pull-left xs"  style="pointer-events: none;">{{$item.Description}}</span></h4>
+                    <span class="pull-right" >{{button "cron_job.details"  $.buttons  $item}} </span>
+                   </li>
+                {{end}}
+              </ul>
+            </div>
+        </div>
+    </div>
+</div>
+

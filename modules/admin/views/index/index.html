@@ -1,0 +1,208 @@
+
+<section class="content">
+
+    {{if ne .show_notice ""}}
+    <div class="row">
+        <div class="pad margin no-print">
+            <div class="callout callout-info">
+                <h4><i class="fa fa-info"></i> {{i18n  "login.hi"}},{{if ne .login_user.LoginName ""}}{{.login_user.LoginName}}{{else}} admin {{end}}:</h4>
+                {{.notice_content}}
+            </div>
+        </div>
+    </div>
+    {{end}}
+
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua">
+                    <i class="fa fa-user"></i>
+                </span>
+                <div class="info-box-content">
+                    <span class="info-box-text">{{i18n  "app.user"}}</span>
+                    <span class="info-box-number">{{.admin_user_count}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-red">
+                    <i class="fa fa-users"></i>
+                </span>
+                <div class="info-box-content">
+                    <span class="info-box-text">{{i18n  "app.role"}}</span>
+                    <span class="info-box-number">{{.admin_role_count}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-green">
+                    <i class="fa fa-list"></i>
+                </span>
+                <div class="info-box-content">
+                    <span class="info-box-text">{{i18n  "app.menu"}}</span>
+                    <span class="info-box-number">{{.admin_menu_count}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix visible-sm-block"></div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-yellow">
+                    <i class="fa fa-keyboard-o"></i>
+                </span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">{{i18n  "app.logs"}}</span>
+                    <span class="info-box-number">{{.admin_log_count}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <section class="col-lg-7 connectedSortable" id="sortable1">
+
+            <div class="box sortable-widget" id="user_info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{i18n  "app.info"}}</h3>
+                </div>
+                <div class="box-body">
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                        <tr>
+                            <th>{{i18n  "app.user_os"}}</th>
+                            <td>{{.system_info.user_os}}</td>
+                            <th>{{i18n  "app.user_ip"}}</th>
+                            <td>{{.system_info.user_ip}}</td>
+                        </tr>
+
+                        <tr>
+                            <th>{{i18n  "app.browser"}}</th>
+                            <td>{{.system_info.user_browser}}</td>
+                            <th>{{i18n  "app.city"}}</th>
+                            <td>--</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="box sortable-widget" id="system_info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{i18n  "app.info"}}</h3>
+                </div>
+                <div class="box-body">
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                        <tr>
+                            <th>{{i18n  "app.server_os"}}</th>
+                            <td>{{.system_info.server_os}}</td>
+                            <th>{{i18n  "app.file_upload_size"}}</th>
+                            <td>{{.system_info.upload_file_max_memory}}M</td>
+                        </tr>
+
+                        <tr>
+                            <th>GO</th>
+                            <td>{{.system_info.go_version}}</td>
+                            <th>Database</th>
+                            <td>{{.system_info.db_version}}</td>
+                        </tr>
+                        <tr>
+                            <th>Beego</th>
+                            <td>{{.system_info.beego_version}}</td>
+                            <th>{{i18n  "app.version"}}</th>
+                            <td>{{.system_info.admin_version}}</td>
+                        </tr>
+
+                        <tr>
+                            <th>{{i18n  "app.timezone"}}</th>
+                            <td>{{.system_info.timezone}}</td>
+                            <th>{{i18n  "app.date_time"}}</th>
+                            <td>{{.system_info.date_time}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="col-lg-5 connectedSortable" id="composer_info">
+            <div class="box sortable-widget" id="widget2">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{i18n  "app.dependency"}}</h3>
+                </div>
+                <div class="box-body">
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                        {{range $index, $elem := .system_info.require_list}}
+                            <tr>
+                                <th>{{$elem.Name}}</th>
+                                <td>{{$elem.Version}}</td>
+                            </tr>
+                        {{end}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
+<script>
+    var passwordDanger = {{.password_danger}};
+    var sortableChanged = false;
+    var sortableIds = [];
+
+    $(function () {
+
+        $('.connectedSortable').sortable({
+            placeholder: 'sort-highlight',
+            connectWith: '.connectedSortable',
+            handle: '.box-header',
+            forcePlaceholderSize: true,
+            zIndex: 999999,
+            update: function (event, ui) {
+                sortableChanged = true;
+                let ids1 = $('#sortable1').sortable('toArray');
+                let ids2 = $('#sortable2').sortable('toArray');
+                $.each(ids2, function (index, item) {
+                    ids1.push(item);
+                });
+
+                sortableIds = ids1;
+                console.log(sortableIds);
+
+                /* $.ajax({
+                     type: "post",
+                     url: "",
+                     data: {image_ids},
+                     dataType: "json",
+                     success: function(result) {
+                         window.location.reload(); //Refresh the page when the data is obtained in the background
+                     }
+                 });*/
+            }
+
+        });
+        $('.connectedSortable .box-header, .connectedSortable .nav-tabs-custom').css('cursor', 'move');
+
+        //Password modification check
+        if (parseInt(passwordDanger) === 1) {
+            layer.confirm('{{i18n  "admin.default_password_warning"}}', {title: '{{i18n  "app.warning"}}', closeBtn: 1, icon: 7}, function () {
+                $.pjax({
+                    url: '/admin/admin_user/profile#privacy',
+                    container: '#pjax-container'
+                });
+                layer.closeAll();
+            });
+        }
+    });
+
+</script>

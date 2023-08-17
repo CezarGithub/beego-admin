@@ -1,0 +1,8 @@
+static/uploads/*
+.idea/*
+quince.exe
+main
+vendor/*
+mysql/*
+go.sum
+lastupdate.tmp

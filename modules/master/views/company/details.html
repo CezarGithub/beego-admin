@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box box-solid">
+            <div class="box-body table-wrap">
+            {{ printf "%#v" .data.Id }}
+                <table class="table table-hover table-bordered "  width="100%">
+                       <tbody>
+                       <tr><td><i class="fa fa-trash-o"> SMTP server </td><td class="td-do">{{button "company.smtp"  $.buttons  .data}}</td></tr>
+                       </tbody>
+                </table>
+            </div>
+         </div>
+    </div>
+</div>

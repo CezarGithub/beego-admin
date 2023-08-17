@@ -1,0 +1,126 @@
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+			     <div class="box-header with-border">
+                    
+                    {{button "user.submit"  $.buttons  .data}}
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        
+                    </div>
+                </div>
+                 <!-- Form -->
+                <form id="userForm" class="form-horizontal dataForm" action="" method="post"
+                      enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="{{.data.Id}}">
+                    <!-- Form field area -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="avatar" class="col-sm-2 control-label">{{i18n  "app.avatar"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <input id="avatar" name="avatar" placeholder="{{i18n  "app.avatar_upload"}}" data-initial-preview="{{.data.Avatar}}" type="file" class="form-control field-image" >
+                            </div>
+                        </div>
+                        <script>
+                            $('#avatar').fileinput({
+                                language: '{{.admin.jsLang}}',
+                                overwriteInitial: true,
+                                browseLabel: '{{i18n  "app.browse"}}',
+                                initialPreviewAsData: true,
+                                dropZoneEnabled: false,
+                                showUpload: false,
+                                showRemove: false,
+                                allowedFileTypes: ['image'],
+                                maxFileSize: 10240,
+                            });
+                        </script>
+                        <div class="form-group">
+                            <label for="user_level_id" class="col-sm-2 control-label">{{i18n  "app.user_level"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <select name="user_level_id" id="user_level_id" class="form-control field-select"
+                                        data-placeholder="{{i18n  "admin.select_user_level"}}">
+                                    <option value=""></option>
+                                    {{range $key,$item := .user_level_list}}
+                                    <option value="{{$item.Id}}" {{if compare $.data.UserLevel.Id $item.Id}}selected {{end}}>
+                                        {{$item.Name}}
+                                    </option>
+                                    {{end}}
+                                </select>
+                            </div>
+                        </div>
+                        <script>
+                            $('#user_level_id').select2();
+                        </script>
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label">{{i18n  "login.username"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <input id="username" name="username" value="{{.data.Username}}"
+                                       placeholder="{{i18n  "login.username"}}" type="text" class="form-control field-text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobile" class="col-sm-2 control-label">{{i18n  "app.phone"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <input id="mobile" name="mobile" value="{{.data.Mobile}}" placeholder="{{i18n  "app.phone"}}"
+                                       type="tel" maxlength="11" class="form-control field-mobile">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nickname" class="col-sm-2 control-label">{{i18n  "app.nickname"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <input id="nickname" name="nickname" value="{{.data.Nickname}}"
+                                       placeholder="{{i18n  "app.nickname"}}" type="text" class="form-control field-text">
+                            </div>
+                        </div>
+                       <div class="form-group">
+                            <label for="email" class="col-sm-2 control-label">{{i18n  "admin.user.email"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <input id="email" name="email" value="{{.data.Email}}"
+                                       placeholder="{{i18n  "admin.user.email"}}" type="email" class="form-control field-text">
+                            </div>
+                        </div>
+  
+
+                        <div class="form-group">
+                            <label for="img" class="col-sm-2 control-label">{{i18n  "app.description"}}</label>
+                            <div class="col-sm-10 col-md-10">
+                                <script id="description" name="description" type="text/plain">{{str2html .data.Description}}
+                                </script>
+                            </div>
+                        </div>
+                        <script>
+                            UE.delEditor('description');
+                            var description = UE.getEditor('description', {
+                                serverUrl: UEServer
+                            });
+                        </script>
+
+                        <div class="form-group">
+                            <label for="status" class="col-sm-2 control-label">{{i18n  "app.enabled"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <input class="input-switch" id="status" value="1" {{if eq 1 .data.Status}}checked {{end}} type="checkbox"/>
+                                <input class="switch field-switch" placeholder="{{i18n  "app.enabled"}}" name="status"
+                                       value="{{.data.Status}}" hidden/>
+                            </div>
+                        </div>
+
+                        <script>
+                            $('#status').bootstrapSwitch({
+                                onText: "{{i18n  "app.yes"}}",
+                                offText: "{{i18n  "app.no"}}",
+                                onColor: "success",
+                                offColor: "danger",
+                                onSwitchChange: function (event, state) {
+                                    $(event.target).closest('.bootstrap-switch').next().val(state ? '1' : '0').change();
+                                }
+                            });
+                        </script>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

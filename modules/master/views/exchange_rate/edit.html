@@ -1,0 +1,66 @@
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title"></h3>
+					{{button "exchange_rate.submit"  $.buttons  .data}} 
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        
+                    </div>
+                </div>
+                
+                <div class="box-body">
+                    
+                    <form id="exchange_rateForm" class="form-horizontal dataForm" action="" method="post"
+                        enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="{{.data.Id}}">
+                                <div class="form-group">
+                                    <label for="currency_code" class="col-sm-2 control-label">{{i18n  "master.exchange_rate.currency_code"}}</label>
+                                    <div class="col-sm-10 col-md-4">
+                                        <select name="currency_code" id="currency_code" class="form-control field-select"
+                                                data-placeholder='{{i18n  "master.exchange_rate.currency_code"}}'>
+                                            <option value=""></option>
+                                            {{range $key,$item := .currency_list}}
+                                            <option value="{{$item.CurrencyCode}}" {{if compare $.data.CurrencyCode $item.CurrencyCode}}selected {{end}}>
+                                                {{$item.CurrencyCode}}
+                                            </option>
+                                            {{end}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <script>
+                                    $('#company_id').select2({
+                                        language: "{{.admin.jsLang}}"
+                                    });
+                                </script>
+
+								<div class="form-group">
+									<label for="name" class="col-sm-2 control-label">{{i18n  "master.exchange_rate.rate"}}</label>
+									<div class="col-sm-10 col-md-4">
+										<input maxlength="50" id="rate" name="rate" value="{{.data.Rate}}"
+											class="form-control" placeholder='{{i18n  "master.exchange_rate.rate"}}'>
+									</div>
+								</div>      
+                    </form>
+                
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+   function search"ExchangeRate"(data){
+        $("#exchange_rate_id").val(data.id);
+        $("#exchange_rate_name").val(data.name);
+    }
+ </script>
+
+ 
+
+
+                

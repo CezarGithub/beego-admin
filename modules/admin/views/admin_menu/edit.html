@@ -1,0 +1,149 @@
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+               <div class="box-header with-border">
+                    <h3 class="box-title">{{.data.Name}}</h3>
+					{{button "admin_menu.submit"  $.buttons  .data}} 
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        
+                    </div>
+                </div>
+                <form id="admin_menuForm" class="dataForm form-horizontal" action="" method="post"
+                      enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="{{.data.Id}}">
+                    <div class="box-body">
+                        <div class="fields-group">
+                            <div class="form-group">
+                                <label for="parent_id" class="col-sm-2 control-label">{{i18n  "app.menu_upper"}}</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <select name="parent_id" id="parent_id" class="form-control select2">
+                                        <option value="0">/</option>
+                                        {{str2html .parents}}
+                                    </select>
+                                </div>
+                            </div>
+                            <script>
+                                $('#parent_id').select2();
+                            </script>
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">{{i18n  "app.name"}}</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <input maxlength="50" id="name" name="name" value="{{.data.Name}}"
+                                           class="form-control" placeholder="{{i18n  "app.name"}}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label"><span><img src="{{flag .admin.user.Language}}"></span></label>
+                                <div class="col-sm-10 col-md-4">
+                                    
+                                    <input maxlength="50" id="i18n" name="i18n" value="{{i18n  .data.Name}}"
+                                           class="form-control" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="url" class="col-sm-2 control-label">url</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <input maxlength="100" id="url" name="url" value="{{.data.Url}}"
+                                           class="form-control" placeholder="url">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="icon" class="col-sm-2 control-label">{{i18n  "app.icon"}}</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <div class="input-group iconpicker-container">
+                                        <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                                        <input maxlength="30" id="icon" name="icon"
+                                               value="{{if eq .data.Icon ""}}fa-list{{else}}{{.data.Icon}}{{end}}" class="form-control "
+                                               placeholder="{{i18n  "app.name"}} class">
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $('#icon').iconpicker({placement: 'bottomLeft'});
+                            </script>
+
+                            <div class="form-group">
+                                <label for="sort_id" class="col-sm-2 control-label">{{i18n  "app.sort"}}</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <div class="input-group">
+                                        <input max="9999" min="1" type="number" id="sort_id" name="sort_id"
+                                               value="{{.data.SortId}}"
+                                               class="form-control input-number field-number" placeholder="{{i18n  "app.default"}} 1000">
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $('#sort_id')
+                                    .bootstrapNumber({
+                                        upClass: 'success',
+                                        downClass: 'primary',
+                                        center: true
+                                    });
+                            </script>
+
+                            <div class="form-group">
+                                <label for="is_show" class="col-sm-2 control-label">{{i18n  "app.visible"}}</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <input class="input-switch" id="is_show" value="1"
+                                           {{if eq .data.IsShow 1}}checked{{end}} type="checkbox"/>
+                                    <input class="switch" name="is_show" value="{{.data.IsShow}}"
+                                           placeholder="" hidden/>
+                                </div>
+                            </div>
+                            <script>
+                                $('#is_show').bootstrapSwitch({
+                                    onText: "{{i18n  "app.yes"}}",
+                                    offText: "{{i18n  "app.no"}}",
+                                    onColor: "success",
+                                    offColor: "danger",
+                                    onSwitchChange: function (event, state) {
+                                        $(event.target).closest('.bootstrap-switch').next().val(state ? '1' : '0').change();
+                                    }
+                                });
+                            </script>
+                            <div class="form-group">
+                                <label for="log_method" class="col-sm-2 control-label">{{i18n  "app.logging_method"}}</label>
+                                <div class="col-sm-10 col-md-4">
+                                    <select name="log_method" id="log_method" class="form-control select2">
+                                        {{range $key,$item := .log_method}}
+                                            <option value="{{$item}}" {{if compare $.data.LogMethod $item}}selected{{end}}>
+                                            {{$item}}
+                                            </option>
+                                        {{end}}
+                                    </select>
+                                </div>
+                            </div>
+                            <script>
+                                $('#log_method').select2();
+                            </script>
+                       <div class="form-group">
+                            <label for="status" class="col-sm-2 control-label">{{i18n  "app.enabled"}}</label>
+                            <div class="col-sm-10 col-md-4">
+                                <input class="input-switch" id="status" value="1" {{if eq .data.Status 1}}checked {{end}}type="checkbox"/>
+                                <input class="switch field-switch" placeholder="{{i18n  "app.enabled"}}" name="status"
+                                       value="{{.data.Status }}" hidden/>
+                            </div>
+                        </div>
+
+                        <script>
+                            $('#status').bootstrapSwitch({
+                                onText: "{{i18n  "app.yes"}}",
+                                offText: "{{i18n  "app.no"}}",
+                                onColor: "success",
+                                offColor: "danger",
+                                onSwitchChange: function (event, state) {
+                                    $(event.target).closest('.bootstrap-switch').next().val(state ? '1' : '0').change();
+                                }
+                            });
+                        </script>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,22 @@
+<!-- Write content here -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header">
+                 <button class="btn btn-sm btn-primary" type="submit" id="btnCopy"><i class="fa fa-copy">&nbsp</i>{{i18n  "app.copy"}}
+                 </button>
+            </div>
+            <div class="box-body">
+                <textarea class="form-control"  style="height: 400px;font-weight: bold" width="100%" placeholder=" ...">
+                    {{generate .model}}
+                </textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("button").click(function(){
+    $("textarea").select();
+    document.execCommand('copy');
+});
+</script>    

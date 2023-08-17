@@ -1,0 +1,41 @@
+<!--Blank pop-up page reference template-->
+{{template "admin/views/public/head_css.html" .}}
+{{template "admin/views/public/head_js.html" .}}
+
+<!-- Write content here -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-body table-responsive">
+                <table id="datalist" class="table table-hover table-bordered datatable" width="100%">
+                    <thead>
+                    <tr>
+                        <th>{{i18n  "db.field_name"}}</th>
+                        <th>{{i18n  "db.field_type"}}</th>
+                        <th>{{i18n  "db.field_sort"}}</th>
+                        <th>{{i18n  "db.field_null"}}</th>
+                        <th>{{i18n  "db.primary_key"}}</th>
+                        <th>{{i18n  "app.default"}}</th>
+                        <th>{{i18n  "app.info"}}</th>
+                        <th>{{i18n  "db.comments"}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{range $key,$item := .data}}
+                    <tr>
+                        <td>{{$item.name}}</td>
+                        <td>{{$item.type}}</td>
+                        <td>{{$item.collation}}</td>
+                        <td>{{$item.null}}</td>
+                        <td>{{$item.key}}</td>
+                        <td>{{$item.default}}</td>
+                        <td>{{$item.extra}}</td>
+                        <td>{{$item.comment}}</td>
+                    </tr>
+                    {{end}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

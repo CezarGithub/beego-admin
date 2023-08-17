@@ -1,0 +1,115 @@
+<!--Blank page reference template-->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <!--Top of the data list-->
+                <div class="box-header">
+                    <div>
+                        <a class="btn btn-info btn-sm AjaxButton" data-toggle="tooltip" title="{{i18n  "db.ExportToJSON"}}"
+                           data-id="exportJSON" data-url="/admin/database/export-json" data-confirm-title="{{i18n  "db.ExportToJSON"}}"
+                           data-confirm-content='{{i18n  "app.export_question"}}'>
+                            <i class="fa fa-download"></i>{{i18n  "db.ExportToJSON"}}
+                        </a>
+                        <a class="btn btn-danger btn-sm AjaxButton" data-toggle="tooltip" title="{{i18n  "db.importFromJSON"}}"
+                           data-id="importJSON" data-url="/admin/database/import-json" data-confirm-title="{{i18n  "db.importFromJSON"}}"
+                           data-confirm-content='{{i18n  "app.import_question"}}'>
+                            <i class="fa fa-upload"></i>{{i18n  "db.importFromJSON"}}
+                        </a>
+ 
+                    </div>
+                </div>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body">
+                    <form class="form-inline searchForm" id="searchForm" action={{urlfor "DatabaseController.Table"}} method="GET"><!--"/admin/route/index"-->
+                        <div class="form-group">
+                            <select name="_module" id="_method" class="form-control " style="width: 250px !important;" onchange='submitForm();'>
+                                <option value=""> {{i18n  "app.module"}}</option>
+                                {{range $key,$item := .modules }}
+                                <option value="{{$item}}" {{if compare $._module $item}} selected {{end}}>
+                                    {{$item}}
+                                </option>
+                                {{end}}
+                            </select>
+                        </div>
+                        <script>
+                            $('#_module').select2({
+                                width:'100%',
+                            });
+                             function submitForm(){
+                                var selectButton = document.getElementById( 'btnSearch' );
+                                selectButton.click();                            
+                            }
+                        </script>    
+                        <div class="form-group">
+                            <button class="btn btn-sm btn-primary" type="submit" id="btnSearch"><i class="fa fa-search"></i>{{i18n  "app.search"}}
+                            </button>
+                        </div>
+                        {{ if and (.module) (ne .module "admin") }}
+                       <a class="btn btn-warning btn-sm AjaxButton" data-toggle="tooltip" title="{{i18n  "db.initDBModule"}}"
+                           data-id="initDB" data-url="/admin/database/init-db?_module={{.module}}" data-confirm-title="{{i18n  "db.initDBModule"}}"
+                           data-confirm-content='{{i18n  "app.import_question"}}'>
+                            <i class="fa fa-upload"></i>{{i18n  "db.initDBModule"}}
+                        </a>
+                        {{end}}
+                    </form>
+            </div>
+        </div>
+    </div>
+                <div class="box-body table-responsive">
+                    <table class="table table-hover table-bordered datatable" width="100%">
+                        <thead>
+                        <tr>
+                            <th>{{i18n  "db.table_name"}}</th>
+                            <th>{{i18n  "db.comments"}}</th>
+                            <th>{{i18n  "db.engine"}}</th>
+                            <th>{{i18n  "db.collation"}}</th>
+                            <!--<th>{{i18n  "db.comments"}}</th>-->
+                            <th>{{i18n  "db.records"}}</th>
+                            <th>{{i18n  "db.creation_time"}}</th>
+                            <th>{{i18n  "db.update_time"}}</th>
+
+                            <th>{{i18n  "db.actions"}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{ $admin := .admin }}
+                        {{range $key,$item := .data}}
+                        <tr>
+                            <td>{{$item.name}}</td>
+                            <td>{{$item.comment}}</td>
+                            <td>{{$item.engine}}</td>
+                            <td>{{$item.collation}}</td>
+                            <td>{{FormatSize $item.data_length ""}}</td>
+                            <td>{{$item.create_time}}</td>
+                            <td>{{$item.update_time}}</td>
+                            <td class="td-do">
+                                <a data-data='{"name":"{{$item.name}}"}' data-url="view" data-confirm="2"
+                                   data-type="2" class="AjaxButton btn btn-default btn-xs"
+                                   data-title="{{$item.name}}({{$item.comment}}){{i18n  "db.table_details"}}" title="{{i18n  "db.table_details"}}"
+                                   data-toggle="tooltip">
+                                    <i class="fa  fa-info-circle"></i>
+                                </a>
+                                <a data-data='{"name":"{{$item.name}}"}' data-go="1" data-url="optimize"
+                                   data-confirm="2" class="AjaxButton btn btn-warning btn-xs" title="{{i18n  "db.table_optimize"}}"
+                                   data-toggle="tooltip">
+                                    <i class="fa  fa-refresh"></i>
+                                </a>
+                                <a data-data='{"name":"{{$item.name}}"}' data-go="1" data-url="repair"
+                                   data-confirm="2" class="AjaxButton btn btn-primary btn-xs" title="{{i18n  "db.table_repair"}}"
+                                   data-toggle="tooltip">
+                                    <i class="fa  fa-circle-o-notch"></i>
+                                </a>
+
+                            </td>
+                        </tr>
+                        {{end}}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

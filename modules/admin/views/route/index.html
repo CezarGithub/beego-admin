@@ -1,0 +1,86 @@
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box  col-xs-8">
+                <div class="box-body">
+                    <form class="form-inline searchForm" id="searchForm" action={{urlfor "RouteController.Index"}} method="GET"><!--"/admin/route/index"-->
+                        <div class="form-group">
+                            <input value="{{._keywords}}"
+                                   name="_keywords" id="_keywords" class="form-control input-sm" placeholder="{{i18n  "app.url"}}">
+                        </div>
+
+                        <div class="form-group ">
+                            <select name="_method" id="_method" class="form-control input-sm">
+                                <option value=""> {{i18n  "app.method"}}</option>
+                                {{range $key,$item := .method_list }}
+                                <option value="{{$item}}" {{if compare $._method $item}} selected {{end}}>
+                                    {{$item}}
+                                </option>
+                                {{end}}
+                            </select>
+                        </div>
+                        <script>
+                            $('#_method').select2({
+                                width:'100%',
+                            });
+                        </script>
+
+     
+                        <div class="form-group">
+                            <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-search"></i>{{i18n  "app.search"}}
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <button onclick="clearSearchForm()" class="btn btn-sm btn-default" type="button"><i
+                                    class="fa  fa-eraser"></i> {{i18n  "app.reset"}}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-body table-responsive">
+                    <table class="table table-hover table-bordered datatable" width="100%">
+
+                        <thead>
+                        <tr>
+                            <th>{{i18n  "app.method"}}</th>
+                            <th>{{i18n  "app.url"}}</th>
+                            <th>{{i18n  "app.function"}}</th>
+                            <th>{{i18n  "app.controller"}}</th>
+                            <th> <i class="fa fa-eye"></i></th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                           {{ $admin := .admin }}
+                            {{range $key,$item := .data}}
+                            <tr>
+                                <td>{{$item.Method}}</td>
+                                <td>{{$item.Url}}</td>
+                                <td>{{$item.Function}}</td>
+                                <td>{{$item.Controller}}</td>
+                                <td class="td-do">
+                                    {{if $item.Controller}}
+                                    <a data-id="{{$item.Controller}}" data-url="view" data-confirm="2" data-type="2"
+                                    class="btn btn-default btn-xs AjaxButton" data-title="{{i18n "app.details"}}" title="{{i18n "app.details"}}" data-toggle="tooltip">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                    {{end}}
+                                </td>
+                            </tr>
+                            {{end}}
+                        </tbody>
+                    </table>
+                </div>
+
+ 
+            </div>
+        </div>
+    </div>
+</section>
