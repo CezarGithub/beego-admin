@@ -8,9 +8,9 @@ Beego v.2 + AdminLTE  + GO 1.19
 ## Features
 
 - 🚀 **Fast**: build a production app in **ten** minutes.
-- 🎨 **i18n**: full internalisation supported
+- 🎨 **i18n**: full internalization supported
 - 🔢 **Modules**: logic and view separated on different folders
-- ⚙️ **Frameworks**: small number of dependencies go web frameworks.
+- ⚙️ **Frameworks**: small number of dependencies .
 
 ## How to
 
